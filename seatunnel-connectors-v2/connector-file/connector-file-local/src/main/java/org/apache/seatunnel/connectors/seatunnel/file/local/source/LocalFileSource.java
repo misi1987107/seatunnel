@@ -18,7 +18,6 @@
 package org.apache.seatunnel.connectors.seatunnel.file.local.source;
 
 import org.apache.seatunnel.api.configuration.ReadonlyConfig;
-import org.apache.seatunnel.connectors.seatunnel.file.config.FileSystemType;
 import org.apache.seatunnel.connectors.seatunnel.file.local.source.config.MultipleTableLocalFileSourceConfig;
 import org.apache.seatunnel.connectors.seatunnel.file.source.BaseMultipleTableFileSource;
 
@@ -30,6 +29,6 @@ public class LocalFileSource extends BaseMultipleTableFileSource {
 
     @Override
     public String getPluginName() {
-        return FileSystemType.LOCAL.getFileSystemPluginName();
+        return "LocalFile";
     }
 }

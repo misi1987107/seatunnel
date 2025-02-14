@@ -233,6 +233,8 @@ public class ConnectorOptionCheckTest {
         whiteList.add("OracleIncrementalSourceOptions");
         whiteList.add("MySqlIncrementalSourceOptions");
         whiteList.add("MongodbIncrementalSourceOptions");
+        whiteList.add("LocalFileSourceOptions");
+        whiteList.add("LocalFileSinkOptions");
         return whiteList;
     }
 }

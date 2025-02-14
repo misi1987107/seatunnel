@@ -19,7 +19,6 @@ package org.apache.seatunnel.connectors.seatunnel.file.local.sink;
 
 import org.apache.seatunnel.api.configuration.ReadonlyConfig;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
-import org.apache.seatunnel.connectors.seatunnel.file.config.FileSystemType;
 import org.apache.seatunnel.connectors.seatunnel.file.local.config.LocalFileHadoopConf;
 import org.apache.seatunnel.connectors.seatunnel.file.sink.BaseMultipleTableFileSink;
 
@@ -36,7 +35,7 @@ public class LocalFileSink extends BaseMultipleTableFileSink {
 
     @Override
     public String getPluginName() {
-        return FileSystemType.LOCAL.getFileSystemPluginName();
+        return "LocalFile";
     }
 
     @Override
