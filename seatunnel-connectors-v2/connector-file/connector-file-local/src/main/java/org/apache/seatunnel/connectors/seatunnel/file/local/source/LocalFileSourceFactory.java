@@ -28,18 +28,25 @@ import org.apache.seatunnel.api.table.factory.TableSourceFactoryContext;
 import org.apache.seatunnel.connectors.seatunnel.file.config.FileFormat;
 
 import com.google.auto.service.AutoService;
+import org.apache.seatunnel.connectors.seatunnel.file.config.FileSystemType;
 import org.apache.seatunnel.connectors.seatunnel.file.local.config.LocalFileSourceOptions;
 
 import java.io.Serializable;
 import java.util.Arrays;
 
-import static org.apache.seatunnel.connectors.seatunnel.file.local.config.LocalFileBaseOptions.*;
+import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.FILE_PATH;
+import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.ENCODING;
+import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.XML_USE_ATTR_FORMAT;
+import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.TIME_FORMAT;
+import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.DATE_FORMAT;
+import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.DATETIME_FORMAT;
+import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.SHEET_NAME;
 
 @AutoService(Factory.class)
 public class LocalFileSourceFactory implements TableSourceFactory {
     @Override
     public String factoryIdentifier() {
-        return "LocalFile";
+        return FileSystemType.LOCAL.getFileSystemPluginName();
     }
 
     @Override
@@ -53,19 +60,19 @@ public class LocalFileSourceFactory implements TableSourceFactory {
         return OptionRule.builder()
                 .optional(ConnectorCommonOptions.TABLE_CONFIGS)
                 .optional(FILE_PATH)
-                .optional(FILE_FORMAT_TYPE)
+                .optional(LocalFileSourceOptions.FILE_FORMAT_TYPE)
                 .optional(ENCODING)
                 .conditional(
-                        FILE_FORMAT_TYPE,
+                        LocalFileSourceOptions.FILE_FORMAT_TYPE,
                         FileFormat.TEXT,
-                        FIELD_DELIMITER)
+                        LocalFileSourceOptions.FIELD_DELIMITER)
                 .conditional(
-                        FILE_FORMAT_TYPE,
+                        LocalFileSourceOptions.FILE_FORMAT_TYPE,
                         FileFormat.XML,
-                        XML_ROW_TAG,
+                        LocalFileSourceOptions.XML_ROW_TAG,
                         XML_USE_ATTR_FORMAT)
                 .conditional(
-                        FILE_FORMAT_TYPE,
+                        LocalFileSourceOptions.FILE_FORMAT_TYPE,
                         Arrays.asList(
                                 FileFormat.TEXT,
                                 FileFormat.JSON,
@@ -77,7 +84,7 @@ public class LocalFileSourceFactory implements TableSourceFactory {
                 .optional(DATE_FORMAT)
                 .optional(DATETIME_FORMAT)
                 .optional(TIME_FORMAT)
-                .optional(LocalFileSourceOptions.SHEET_NAME)
+                .optional(SHEET_NAME)
                 .optional(LocalFileSourceOptions.EXCEL_ENGINE)
                 .optional(LocalFileSourceOptions.FILE_FILTER_PATTERN)
                 .optional(LocalFileSourceOptions.COMPRESS_CODEC)

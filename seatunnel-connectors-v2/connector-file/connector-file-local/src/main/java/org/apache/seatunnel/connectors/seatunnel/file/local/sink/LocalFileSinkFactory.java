@@ -26,6 +26,7 @@ import org.apache.seatunnel.api.table.factory.Factory;
 import org.apache.seatunnel.api.table.factory.TableSinkFactoryContext;
 import org.apache.seatunnel.api.table.type.SeaTunnelRow;
 import org.apache.seatunnel.connectors.seatunnel.file.config.FileFormat;
+import org.apache.seatunnel.connectors.seatunnel.file.config.FileSystemType;
 import org.apache.seatunnel.connectors.seatunnel.file.factory.BaseMultipleTableFileSinkFactory;
 import org.apache.seatunnel.connectors.seatunnel.file.local.config.LocalFileSinkOptions;
 import org.apache.seatunnel.connectors.seatunnel.file.sink.commit.FileAggregatedCommitInfo;
@@ -34,30 +35,35 @@ import org.apache.seatunnel.connectors.seatunnel.file.sink.state.FileSinkState;
 
 import com.google.auto.service.AutoService;
 
-import static org.apache.seatunnel.connectors.seatunnel.file.local.config.LocalFileBaseOptions.*;
+import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.FILE_PATH;
+import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.XML_USE_ATTR_FORMAT;
+import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.DATE_FORMAT;
+import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.DATETIME_FORMAT;
+import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.TIME_FORMAT;
+import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.ENCODING;
 
 @AutoService(Factory.class)
 public class LocalFileSinkFactory extends BaseMultipleTableFileSinkFactory {
     @Override
     public String factoryIdentifier() {
-        return "LocalFile";
+        return FileSystemType.LOCAL.getFileSystemPluginName();
     }
 
     @Override
     public OptionRule optionRule() {
         return OptionRule.builder()
                 .required(FILE_PATH)
-                .required(FILE_FORMAT_TYPE)
+                .required(LocalFileSinkOptions.FILE_FORMAT_TYPE)
                 .optional(LocalFileSinkOptions.TMP_PATH)
-                .optional(SCHEMA_SAVE_MODE)
-                .optional(DATA_SAVE_MODE)
+                .optional(LocalFileSinkOptions.SCHEMA_SAVE_MODE)
+                .optional(LocalFileSinkOptions.DATA_SAVE_MODE)
                 .optional(SinkConnectorCommonOptions.MULTI_TABLE_SINK_REPLICA)
-                .conditional(FILE_FORMAT_TYPE,
+                .conditional(LocalFileSinkOptions.FILE_FORMAT_TYPE,
                         FileFormat.EXCEL,
                         LocalFileSinkOptions.MAX_ROWS_IN_MEMORY,
                         LocalFileSinkOptions.SHEET_NAME)
                 .conditional(
-                        FILE_FORMAT_TYPE,
+                        LocalFileSinkOptions.FILE_FORMAT_TYPE,
                         FileFormat.XML,
                         XML_USE_ATTR_FORMAT)
                 .optional(LocalFileSinkOptions.CUSTOM_FILENAME)
@@ -80,7 +86,7 @@ public class LocalFileSinkFactory extends BaseMultipleTableFileSinkFactory {
                 .optional(LocalFileSinkOptions.BATCH_SIZE)
                 .optional(LocalFileSinkOptions.TXT_COMPRESS)
                 .optional(LocalFileSinkOptions.XML_ROOT_TAG)
-                .optional(XML_ROW_TAG)
+                .optional(LocalFileSinkOptions.XML_ROW_TAG)
                 .optional(LocalFileSinkOptions.PARQUET_AVRO_WRITE_TIMESTAMP_AS_INT96)
                 .optional(LocalFileSinkOptions.PARQUET_AVRO_WRITE_FIXED_AS_INT96)
                 .optional(LocalFileSinkOptions.ENABLE_HEADER_WRITE)
@@ -90,7 +96,7 @@ public class LocalFileSinkFactory extends BaseMultipleTableFileSinkFactory {
 
     @Override
     public TableSink<SeaTunnelRow, FileSinkState, FileCommitInfo, FileAggregatedCommitInfo>
-            createSink(TableSinkFactoryContext context) {
+    createSink(TableSinkFactoryContext context) {
         ReadonlyConfig readonlyConfig = context.getOptions();
         CatalogTable catalogTable = context.getCatalogTable();
         return () -> new LocalFileSink(readonlyConfig, catalogTable);
