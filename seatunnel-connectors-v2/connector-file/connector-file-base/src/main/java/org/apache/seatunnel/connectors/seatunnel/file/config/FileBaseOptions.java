@@ -36,8 +36,7 @@ public class FileBaseOptions extends ConnectorCommonOptions {
             Options.key("encoding")
                     .stringType()
                     .defaultValue("UTF-8")
-                    .withDescription(
-                            "The encoding of the file, e.g. UTF-8, ISO-8859-1....");
+                    .withDescription("The encoding of the file, e.g. UTF-8, ISO-8859-1....");
 
     public static final Option<DateUtils.Formatter> DATE_FORMAT =
             Options.key("date_format")
@@ -112,5 +111,4 @@ public class FileBaseOptions extends ConnectorCommonOptions {
                     .stringType()
                     .noDefaultValue()
                     .withDescription("When using kerberos, We should specify the keytab path");
-
 }

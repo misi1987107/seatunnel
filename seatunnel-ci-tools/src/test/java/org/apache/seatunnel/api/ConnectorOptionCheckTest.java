@@ -120,7 +120,11 @@ public class ConnectorOptionCheckTest {
                                                                         || extendedType
                                                                                 .getNameAsString()
                                                                                 .equals(
-                                                                                        "IncrementalSource")) {
+                                                                                        "IncrementalSource")
+                                                                        || extendedType
+                                                                                .getNameAsString()
+                                                                                .equals(
+                                                                                        "BaseMultipleTableFileSink")) {
                                                                     connectorOptionFileNames.add(
                                                                             path.getFileName()
                                                                                     .toString()
@@ -233,8 +237,9 @@ public class ConnectorOptionCheckTest {
         whiteList.add("OracleIncrementalSourceOptions");
         whiteList.add("MySqlIncrementalSourceOptions");
         whiteList.add("MongodbIncrementalSourceOptions");
-        whiteList.add("LocalFileSourceOptions");
-        whiteList.add("LocalFileSinkOptions");
+        whiteList.add("OssFileSinkOptions");
+        whiteList.add("SftpFileSinkOptions");
+        whiteList.add("FtpFileSinkOptions");
         return whiteList;
     }
 }

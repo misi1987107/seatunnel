@@ -19,5 +19,4 @@ package org.apache.seatunnel.connectors.seatunnel.file.local.config;
 
 import org.apache.seatunnel.connectors.seatunnel.file.config.BaseSinkConfig;
 
-public class LocalFileSinkOptions extends BaseSinkConfig {
-}
+public class LocalFileSinkOptions extends BaseSinkConfig {}

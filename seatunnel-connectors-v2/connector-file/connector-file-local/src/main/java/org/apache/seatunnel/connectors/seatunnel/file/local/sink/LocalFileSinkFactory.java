@@ -35,12 +35,12 @@ import org.apache.seatunnel.connectors.seatunnel.file.sink.state.FileSinkState;
 
 import com.google.auto.service.AutoService;
 
-import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.FILE_PATH;
-import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.XML_USE_ATTR_FORMAT;
-import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.DATE_FORMAT;
 import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.DATETIME_FORMAT;
-import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.TIME_FORMAT;
+import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.DATE_FORMAT;
 import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.ENCODING;
+import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.FILE_PATH;
+import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.TIME_FORMAT;
+import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.XML_USE_ATTR_FORMAT;
 
 @AutoService(Factory.class)
 public class LocalFileSinkFactory extends BaseMultipleTableFileSinkFactory {
@@ -58,14 +58,13 @@ public class LocalFileSinkFactory extends BaseMultipleTableFileSinkFactory {
                 .optional(LocalFileSinkOptions.SCHEMA_SAVE_MODE)
                 .optional(LocalFileSinkOptions.DATA_SAVE_MODE)
                 .optional(SinkConnectorCommonOptions.MULTI_TABLE_SINK_REPLICA)
-                .conditional(LocalFileSinkOptions.FILE_FORMAT_TYPE,
+                .conditional(
+                        LocalFileSinkOptions.FILE_FORMAT_TYPE,
                         FileFormat.EXCEL,
                         LocalFileSinkOptions.MAX_ROWS_IN_MEMORY,
                         LocalFileSinkOptions.SHEET_NAME)
                 .conditional(
-                        LocalFileSinkOptions.FILE_FORMAT_TYPE,
-                        FileFormat.XML,
-                        XML_USE_ATTR_FORMAT)
+                        LocalFileSinkOptions.FILE_FORMAT_TYPE, FileFormat.XML, XML_USE_ATTR_FORMAT)
                 .optional(LocalFileSinkOptions.CUSTOM_FILENAME)
                 .optional(LocalFileSinkOptions.FILE_NAME_EXPRESSION)
                 .optional(LocalFileSinkOptions.FILENAME_TIME_FORMAT)
@@ -96,7 +95,7 @@ public class LocalFileSinkFactory extends BaseMultipleTableFileSinkFactory {
 
     @Override
     public TableSink<SeaTunnelRow, FileSinkState, FileCommitInfo, FileAggregatedCommitInfo>
-    createSink(TableSinkFactoryContext context) {
+            createSink(TableSinkFactoryContext context) {
         ReadonlyConfig readonlyConfig = context.getOptions();
         CatalogTable catalogTable = context.getCatalogTable();
         return () -> new LocalFileSink(readonlyConfig, catalogTable);

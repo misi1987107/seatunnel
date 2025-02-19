@@ -26,21 +26,21 @@ import org.apache.seatunnel.api.table.factory.Factory;
 import org.apache.seatunnel.api.table.factory.TableSourceFactory;
 import org.apache.seatunnel.api.table.factory.TableSourceFactoryContext;
 import org.apache.seatunnel.connectors.seatunnel.file.config.FileFormat;
-
-import com.google.auto.service.AutoService;
 import org.apache.seatunnel.connectors.seatunnel.file.config.FileSystemType;
 import org.apache.seatunnel.connectors.seatunnel.file.local.config.LocalFileSourceOptions;
+
+import com.google.auto.service.AutoService;
 
 import java.io.Serializable;
 import java.util.Arrays;
 
-import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.FILE_PATH;
-import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.ENCODING;
-import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.XML_USE_ATTR_FORMAT;
-import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.TIME_FORMAT;
-import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.DATE_FORMAT;
 import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.DATETIME_FORMAT;
+import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.DATE_FORMAT;
+import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.ENCODING;
+import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.FILE_PATH;
 import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.SHEET_NAME;
+import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.TIME_FORMAT;
+import static org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions.XML_USE_ATTR_FORMAT;
 
 @AutoService(Factory.class)
 public class LocalFileSourceFactory implements TableSourceFactory {
